@@ -1,19 +1,18 @@
-import { SafeAreaView } from "react-native-safe-area-context";
+import cn from "clsx";
+import { Fragment } from "react";
 import {
   FlatList,
   Image,
   Pressable,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import { Fragment } from "react";
-import cn from "clsx";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import CartButton from "@/Components/CartButton";
 
 import { images, offers } from "@/Constants";
-import { Button } from "react-native";
 
 import useAuthStore from "@/store/auth.store";
 
@@ -22,7 +21,7 @@ export default function Index() {
   const { user } = useAuthStore()
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-gray-300">
       <FlatList
         data={offers}
         renderItem={({ item, index }) => {
