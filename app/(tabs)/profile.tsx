@@ -1,194 +1,114 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Platform } from "react-native";
+import CustomHeader from "@/Components/CustomHeader";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { images } from "@/Constants";
-import { useState } from "react";
-import { router } from "expo-router";
 
-interface ProfileOption {
-  id: string;
-  title: string;
-  icon: any;
-  onPress: () => void;
-  showArrow?: boolean;
-  isDanger?: boolean;
-}
-
-const ProfileOptionItem = ({ 
-  title, 
-  icon, 
-  onPress, 
-  showArrow = true,
-  isDanger = false 
-}: ProfileOption) => (
-  <TouchableOpacity
-    onPress={onPress}
-    className="flex-row items-center justify-between bg-white px-5 py-4 mb-3 rounded-2xl"
-    style={Platform.OS === "android" ? { elevation: 2, shadowColor: "#000" } : {}}
-  >
-    <View className="flex-row items-center gap-4">
-      <View className="w-10 h-10 items-center justify-center bg-gray-100 rounded-full">
-        <Image
-          source={icon}
-          style={{ width: 20, height: 20 }}
-          resizeMode="contain"
-          tintColor={isDanger ? "#EF4444" : "#1F2937"}
-        />
-      </View>
-      <Text className={`text-base font-semibold ${isDanger ? "text-red-500" : "text-gray-900"}`}>
-        {title}
-      </Text>
-    </View>
-    {showArrow && (
-      <Image
-        source={images.arrowRight}
-        style={{ width: 20, height: 20 }}
-        resizeMode="contain"
-        tintColor="#9CA3AF"
-      />
-    )}
-  </TouchableOpacity>
-);
-
-const Profile = () => {
-  const [user] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567",
-    avatar: images.avatar,
-  });
-
-  const accountOptions: ProfileOption[] = [
-    {
-      id: "1",
-      title: "Edit Profile",
-      icon: images.pencil,
-      onPress: () => console.log("Edit Profile"),
-    },
-    {
-      id: "2",
-      title: "Delivery Address",
-      icon: images.location,
-      onPress: () => console.log("Delivery Address"),
-    },
-    {
-      id: "3",
-      title: "Payment Methods",
-      icon: images.dollar,
-      onPress: () => console.log("Payment Methods"),
-    },
-  ];
-
-  const generalOptions: ProfileOption[] = [
-    {
-      id: "4",
-      title: "Order History",
-      icon: images.bag,
-      onPress: () => console.log("Order History"),
-    },
-    {
-      id: "5",
-      title: "Notifications",
-      icon: images.envelope,
-      onPress: () => console.log("Notifications"),
-    },
-    {
-      id: "6",
-      title: "Help & Support",
-      icon: images.phone,
-      onPress: () => console.log("Help & Support"),
-    },
-  ];
-
-  const handleLogout = () => {
-    // Add logout logic here
-    console.log("Logout");
-    // router.replace("/login");
-  };
-
+const profile = () => {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
-      <ScrollView 
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 32 }}
-      >
+      <ScrollView className="flex-1 pb-[8rem]" showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="px-5 pt-5 pb-8">
-          <Text className="text-3xl font-bold text-gray-900">Profile</Text>
+        <View className="mt-5 mx-5">
+          <CustomHeader title="Profile" />
         </View>
 
-        {/* User Info Card */}
-        <View className="mx-5 mb-6">
-          <View
-            className="bg-white rounded-3xl p-6 items-center"
-            style={Platform.OS === "android" ? { elevation: 3, shadowColor: "#000" } : {}}
-          >
-            <View className="relative mb-4">
-              <Image
-                source={user.avatar}
-                style={{ width: 100, height: 100 }}
-                className="rounded-full"
-                resizeMode="cover"
-              />
-              <TouchableOpacity
-                className="absolute bottom-0 right-0 bg-orange-500 w-8 h-8 rounded-full items-center justify-center"
-                style={Platform.OS === "android" ? { elevation: 4, shadowColor: "#000" } : {}}
-              >
-                <Image
-                  source={images.pencil}
-                  style={{ width: 16, height: 16 }}
-                  resizeMode="contain"
-                  tintColor="#FFF"
-                />
-              </TouchableOpacity>
-            </View>
+        {/* Profile Image */}
+        <View className="items-center mt-6">
+          <TouchableOpacity className="relative">
+            <Image source={images.avatar} />
+            <TouchableOpacity className="absolute right-4 bottom-3 bg-primary p-2 rounded-full">
+              <Image source={images.pencil} />
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
 
-            <Text className="text-xl font-bold text-gray-900 mb-1">
-              {user.name}
-            </Text>
-            <Text className="text-sm text-gray-500 mb-1">{user.email}</Text>
-            <Text className="text-sm text-gray-500">{user.phone}</Text>
+        {/* Profile Info */}
+        <View className="bg-white rounded-2xl p-5 mx-5 mt-8">
+          {/* Full Name */}
+          <View className="flex-row items-center py-4">
+            <View className="w-10 h-10 bg-orange-50 rounded-full items-center justify-center">
+              <Image source={images.user} style={{ height: 20, width: 20 }} />
+            </View>
+            <View className="ml-4 flex-1">
+              <Text className="text-xs text-gray-500 mb-1">Full Name</Text>
+              <Text className="text-base text-gray-900">Adrian Hajdin</Text>
+            </View>
+          </View>
+
+          {/* Email */}
+          <View className="flex-row items-center py-4">
+            <View className="w-10 h-10 bg-orange-50 rounded-full items-center justify-center">
+              <Image source={images.envelope} style={{ height: 20, width: 20 }} />
+            </View>
+            <View className="ml-4 flex-1">
+              <Text className="text-xs text-gray-500 mb-1">Email</Text>
+              <Text className="text-base text-gray-900">tunde@dev.com</Text>
+            </View>
+          </View>
+
+          {/* Phone number */}
+          <View className="flex-row items-center py-4">
+            <View className="w-10 h-10 bg-orange-50 rounded-full items-center justify-center">
+              <Image source={images.phone} style={{ height: 20, width: 20 }} />
+            </View>
+            <View className="ml-4 flex-1">
+              <Text className="text-xs text-gray-500 mb-1">Phone number</Text>
+              <Text className="text-base text-gray-900">+234 222 444 6666</Text>
+            </View>
+          </View>
+
+          {/* Address 1 - Home */}
+          <View className="flex-row items-center py-4">
+            <View className="w-10 h-10 bg-orange-50 rounded-full items-center justify-center">
+              <Image source={images.location} style={{ height: 20, width: 20 }} />
+            </View>
+            <View className="ml-4 flex-1">
+              <Text className="text-xs text-gray-500 mb-1">Home Address</Text>
+              <Text className="text-base text-gray-900">
+                Lorem ipsum dolor sit amet consectetur
+              </Text>
+            </View>
+          </View>
+
+          {/* Address 2 - Work */}
+          <View className="flex-row items-center py-4">
+            <View className="w-10 h-10 bg-orange-50 rounded-full items-center justify-center">
+              <Image source={images.location} style={{ height: 20, width: 20 }} />
+            </View>
+            <View className="ml-4 flex-1">
+              <Text className="text-xs text-gray-500 mb-1">Work Address</Text>
+              <Text className="text-base text-gray-900">
+                Lorem ipsum dolor sit amet consectetur
+              </Text>
+            </View>
           </View>
         </View>
 
-        {/* Account Section */}
-        <View className="px-5 mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4">
-            Account Settings
-          </Text>
-          {accountOptions.map((option) => (
-            <ProfileOptionItem key={option.id} {...option} />
-          ))}
-        </View>
+        {/* Buttons */}
+        <View className="mx-5 mt-8 mb-8">
+          {/* Edit Profile */}
+          <TouchableOpacity className="bg-orange-100 border-2 border-primary rounded-full p-5 mb-4 active:opacity-80">
+            <Text className="text-primary text-center font-semibold text-base">
+              Edit Profile
+            </Text>
+          </TouchableOpacity>
 
-        {/* General Section */}
-        <View className="px-5 mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4">
-            General
-          </Text>
-          {generalOptions.map((option) => (
-            <ProfileOptionItem key={option.id} {...option} />
-          ))}
+          {/* Logout */}
+          <TouchableOpacity className="bg-red-100 border-2 border-error rounded-full p-5 active:opacity-80">
+            <View className="flex-row items-center justify-center gap-x-2">
+              <Image source={images.logout} style={{ height: 25, width: 25 }} />
+              <Text className="text-error text-center font-semibold text-base">
+                Logout
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
-
-        {/* Logout Button */}
-        <View className="px-5">
-          <ProfileOptionItem
-            id="logout"
-            title="Logout"
-            icon={images.logout}
-            onPress={handleLogout}
-            showArrow={false}
-            isDanger={true}
-          />
-        </View>
-
-        {/* App Version */}
-        <View className="items-center mt-8">
-          <Text className="text-sm text-gray-400">Version 1.0.0</Text>
-        </View>
+        
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default Profile;
+export default profile;

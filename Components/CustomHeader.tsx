@@ -21,8 +21,7 @@ const CustomHeader = ({ title }: CustomHeaderProps) => {
             {title && <Text className="base-semibold text-dark-100">{title}</Text>}
 
             <Image 
-                source={images.search} 
-                className="size-5" 
+                source={images.search}
                 resizeMode="contain"
                 style={{height: 20, width: 20}}
             />
